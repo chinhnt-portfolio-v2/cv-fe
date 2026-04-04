@@ -1,0 +1,6 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { FileText, Globe } from 'lucide-react';
+import { Link } from 'react-router-dom';
+export default function HomePage() {
+    return (_jsx("main", { className: "min-h-screen bg-neutral-950 text-white flex items-center justify-center p-6", children: _jsxs("div", { className: "max-w-md w-full space-y-6 text-center", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-neutral-400 uppercase tracking-widest mb-2", children: "Curriculum Vitae" }), _jsx("h1", { className: "text-3xl font-bold text-white", children: "Nguyen The Chinh" }), _jsx("p", { className: "text-neutral-400 mt-1", children: "Fullstack Developer" })] }), _jsxs("div", { className: "space-y-3", children: [_jsxs(Link, { to: "/en", className: "flex items-center justify-center gap-3 w-full px-6 py-4 rounded-xl bg-white text-neutral-900 font-medium hover:bg-neutral-200 transition-colors", children: [_jsx(Globe, { className: "w-5 h-5" }), "English Version"] }), _jsxs(Link, { to: "/vi", className: "flex items-center justify-center gap-3 w-full px-6 py-4 rounded-xl border border-neutral-700 text-white font-medium hover:bg-neutral-800 transition-colors", children: [_jsx(FileText, { className: "w-5 h-5" }), "Phi\u00EAn b\u1EA3n Ti\u1EBFng Vi\u1EC7t"] })] })] }) }));
+}
