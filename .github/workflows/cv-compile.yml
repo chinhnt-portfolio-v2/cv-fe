@@ -10,7 +10,7 @@ on:
 
 jobs:
   compile-and-deploy:
-    name: Compile → Deploy
+    name: Compile â†’ Deploy
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -22,12 +22,12 @@ jobs:
       - name: Compile EN CV
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: typst compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf
+          args: compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf
 
       - name: Compile VI CV
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: typst compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf
+          args: compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf
 
       - name: Commit PDFs
         run: |
