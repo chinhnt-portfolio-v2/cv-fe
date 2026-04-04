@@ -20,12 +20,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Compile EN CV
-        uses: docker://typst/typst:latest
+        uses: docker://ghcr.io/typst/typst:latest
         with:
           args: typst compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf
 
       - name: Compile VI CV
-        uses: docker://typst/typst:latest
+        uses: docker://ghcr.io/typst/typst:latest
         with:
           args: typst compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf
 
