@@ -1,0 +1,42 @@
+name: Compile CV PDFs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Nguyen-The-Chinh-CV-*.typ'
+  workflow_dispatch:
+
+jobs:
+  compile-and-deploy:
+    name: Compile → Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile EN CV
+        uses: docker://typst/typst:latest
+        with:
+          args: typst compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf
+
+      - name: Compile VI CV
+        uses: docker://typst/typst:latest
+        with:
+          args: typst compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf
+
+      - name: Commit PDFs
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/cv-en.pdf public/cv-vi.pdf
+          if git diff --staged --quiet; then
+            echo "No PDF changes"
+          else
+            git commit -m "chore: auto-compile CV PDFs"
+            git push
+          fi
