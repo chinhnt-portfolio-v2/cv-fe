@@ -22,6 +22,7 @@
   show-footer: false,
   show-address-icon: true,
   paper-size: "us-letter",
+  font: ("Roboto", "Source Sans 3", "DejaVu Sans"),
 )
 
 = Giới Thiệu
