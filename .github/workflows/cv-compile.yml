@@ -29,22 +29,18 @@ jobs:
           ls fonts/
 
       - name: Compile EN CV
-        run: |
-          docker run --rm \
-            -v "${{ github.workspace }}/fonts:/fonts:ro" \
-            -v "${{ github.workspace }}:/data" \
-            -w /data \
-            ghcr.io/typst/typst:latest \
-            sh -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf"
+        run: >
+          docker run --rm -v "${{ github.workspace }}/fonts:/fonts:ro"
+          -v "${{ github.workspace }}:/data" -w /data
+          ghcr.io/typst/typst:latest
+          /bin/sh -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && typst compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf"
 
       - name: Compile VI CV
-        run: |
-          docker run --rm \
-            -v "${{ github.workspace }}/fonts:/fonts:ro" \
-            -v "${{ github.workspace }}:/data" \
-            -w /data \
-            ghcr.io/typst/typst:latest \
-            sh -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf"
+        run: >
+          docker run --rm -v "${{ github.workspace }}/fonts:/fonts:ro"
+          -v "${{ github.workspace }}:/data" -w /data
+          ghcr.io/typst/typst:latest
+          /bin/sh -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && typst compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf"
 
       - name: Commit PDFs
         run: |
