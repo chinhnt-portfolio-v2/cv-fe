@@ -10,7 +10,7 @@ on:
 
 jobs:
   compile-and-deploy:
-    name: Compile â†’ Deploy
+    name: Compile → Deploy
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -29,31 +29,14 @@ jobs:
           ls fonts/
 
       - name: Compile EN CV
-        run: |
-          docker run --rm \
-            -v "${{ github.workspace }}/fonts:/fonts:ro" \
-            -v "${{ github.workspace }}:/data" \
-            -w /data \
-            ghcr.io/typst/typst:latest \
-            /bin/sh -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && typst compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf"
+        run: docker run --rm -v "${{ github.workspace }}/fonts:/fonts:ro" -v "${{ github.workspace }}:/data" -w /data ghcr.io/typst/typst:latest /bin/bash -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && typst compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf"
 
       - name: Compile VI CV
-        run: |
-          docker run --rm \
-            -v "${{ github.workspace }}/fonts:/fonts:ro" \
-            -v "${{ github.workspace }}:/data" \
-            -w /data \
-            ghcr.io/typst/typst:latest \
-            /bin/sh -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && typst compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf"
+        run: docker run --rm -v "${{ github.workspace }}/fonts:/fonts:ro" -v "${{ github.workspace }}:/data" -w /data ghcr.io/typst/typst:latest /bin/bash -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && typst compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf"
 
       - name: Commit PDFs
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add public/cv-en.pdf public/cv-vi.pdf
-          if git diff --staged --quiet; then
-            echo "No PDF changes"
-          else
-            git commit -m "chore: auto-compile CV PDFs"
-            git push
-          fi
+          if git diff --staged --quiet; then echo "No PDF changes"; else git commit -m "chore: auto-compile CV PDFs"; git push; fi
