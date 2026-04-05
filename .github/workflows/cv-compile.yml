@@ -19,28 +19,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install fonts
+      - name: Download fonts
         run: |
-          apt-get update && apt-get install -y fonts-roboto fonts-dejavu-extra 2>&1 | tail -3
-          fc-list | grep -i roboto | head -3
+          mkdir -p fonts
+          BASE="https://raw.githubusercontent.com/google/fonts/main/ofl/roboto"
+          for variant in Regular Bold Light Medium Thin; do
+            curl -sL "$BASE/Roboto-$variant.ttf" -o "fonts/Roboto-$variant.ttf"
+          done
+          ls fonts/
 
       - name: Compile EN CV
         run: |
           docker run --rm \
+            -v "${{ github.workspace }}/fonts:/fonts:ro" \
             -v "${{ github.workspace }}:/data" \
-            -v "/usr/share/fonts:/usr/share/fonts:ro" \
             -w /data \
             ghcr.io/typst/typst:latest \
-            compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf
+            sh -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && compile Nguyen-The-Chinh-CV-EN.typ public/cv-en.pdf"
 
       - name: Compile VI CV
         run: |
           docker run --rm \
+            -v "${{ github.workspace }}/fonts:/fonts:ro" \
             -v "${{ github.workspace }}:/data" \
-            -v "/usr/share/fonts:/usr/share/fonts:ro" \
             -w /data \
             ghcr.io/typst/typst:latest \
-            compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf
+            sh -c "cp /fonts/*.ttf /usr/share/fonts/truetype/ && fc-cache -f && compile Nguyen-The-Chinh-CV-VN.typ public/cv-vi.pdf"
 
       - name: Commit PDFs
         run: |
