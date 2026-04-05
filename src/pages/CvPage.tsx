@@ -45,11 +45,12 @@ export default function CvPage({ lang }: CvPageProps) {
       </header>
 
       {/* PDF embed */}
-      <div className="flex-1 flex items-center justify-center p-6">
+      <div className="flex-1 flex items-start justify-center p-6 overflow-auto">
         <iframe
           src={pdfFile}
           title={label.title}
-          className="w-full max-w-3xl aspect-[8.5/11] rounded-lg shadow-2xl bg-white"
+          className="w-full max-w-5xl h-screen rounded-lg shadow-2xl bg-white border-0"
+          style={{ minHeight: '90vh' }}
         />
       </div>
     </main>
